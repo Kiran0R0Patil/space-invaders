@@ -1,4 +1,7 @@
 const grid = document.querySelector('.grid')
+let currentShooterIndex = 202
+const width = 15
+let dir = 1
 
 for(let i=0; i< 225; i++){
     const square = document.createElement('div')
@@ -20,3 +23,52 @@ function draw(){
     }
 }
 draw()
+
+function remove(){
+    for(let i=0; i< alienInvaders.length; i++){
+        squares[alienInvaders[i]].classList.remove('invader')
+    }
+}
+
+squares[currentShooterIndex].classList.add('shooter')
+
+function moveShooter(e) {
+squares[currentShooterIndex].classList.remove('shooter')
+switch(e.key){
+    case 'ArrowLeft':
+        if(currentShooterIndex % width !== 0) currentShooterIndex --
+        break
+    case 'ArrowRight':
+        if(currentShooterIndex % width < width - 1) currentShooterIndex++
+        break
+}
+squares[currentShooterIndex].classList.add('shooter')
+}
+
+document.addEventListener('keydown', moveShooter)
+
+function moveInvaders(){
+    const leftEdge = alienInvaders[0] % width === 0
+    const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width - 1
+    remove()
+
+    if(rightEdge){
+        for(let i=0; i< alienInvaders.length; i++){
+        alienInvaders[i] += 14
+        dir = -1
+        }
+    }
+    if(leftEdge){
+        for(let i=0; i< alienInvaders.length; i++){
+        alienInvaders[i] += 14
+        dir = 1
+        }
+    }
+
+    for(let i=0; i< alienInvaders.length; i++){
+    alienInvaders[i] += dir
+    }
+    draw()
+}
+
+setInterval(moveInvaders, 500)
