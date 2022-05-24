@@ -1,7 +1,11 @@
 const grid = document.querySelector('.grid')
-let currentShooterIndex = 202
+const resultDisplay = document.getElementById('result')
+const score = document.getElementById('score')
 const width = 15
+let currentShooterIndex = -1
+let invadersId
 let dir = 1
+let goingRight = true
 
 for(let i=0; i< 225; i++){
     const square = document.createElement('div')
@@ -10,6 +14,11 @@ for(let i=0; i< 225; i++){
 }
 
 const squares = Array.from(document.querySelectorAll('.grid div'))
+
+for(let i=224; i>209; i--){
+    squares[i].classList.add('occupied')
+}
+
 
 const alienInvaders = [
     0,1,2,3,4,5,6,7,8,9,
@@ -22,7 +31,6 @@ function draw(){
         squares[alienInvaders[i]].classList.add('invader')
     }
 }
-draw()
 
 function remove(){
     for(let i=0; i< alienInvaders.length; i++){
@@ -30,7 +38,7 @@ function remove(){
     }
 }
 
-squares[currentShooterIndex].classList.add('shooter')
+// squares[currentShooterIndex].classList.add('shooter')
 
 function moveShooter(e) {
 squares[currentShooterIndex].classList.remove('shooter')
@@ -52,16 +60,19 @@ function moveInvaders(){
     const rightEdge = alienInvaders[alienInvaders.length - 1] % width === width - 1
     remove()
 
-    if(rightEdge){
+    if(rightEdge && goingRight){
         for(let i=0; i< alienInvaders.length; i++){
-        alienInvaders[i] += 14
+        alienInvaders[i] += width + 1
         dir = -1
+        goingRight = false
         }
     }
-    if(leftEdge){
+    
+    else if(leftEdge && !goingRight){
         for(let i=0; i< alienInvaders.length; i++){
-        alienInvaders[i] += 14
+        alienInvaders[i] += width - 1
         dir = 1
+        goingRight = true
         }
     }
 
@@ -69,6 +80,17 @@ function moveInvaders(){
     alienInvaders[i] += dir
     }
     draw()
-}
 
-setInterval(moveInvaders, 500)
+    if(squares[currentShooterIndex].classList.contains('invader','occupied')){
+        resultDisplay.innerHTML = 'GAME OVER !!'
+        clearInterval(invadersId)
+        document.removeEventListener('keydown', moveShooter)
+    }  
+
+}
+invadersId = setInterval(moveInvaders, 100)
+
+// function shoot(e){
+//     let laserId 
+
+// }
