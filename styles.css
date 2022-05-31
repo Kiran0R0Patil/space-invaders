@@ -23,9 +23,17 @@ h2{
 }
 
 .shooter {
-    background-color: red;
+    background-color: green;
 }
 
 .occupied {
-    border: 0.1px solid red;
+    background-color: rgb(54, 54, 50);
+}
+
+.laser {
+    background-color: blue;
+}
+
+.boom {
+    background-color: red;
 }
