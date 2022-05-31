@@ -1,9 +1,18 @@
+body{
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
 h2{
     width: 300px;
     height: 30px;
     text-align: center;
     border: 1px solid red;
 }
+
 .grid{
     width: 300px;
     height: 300px;
