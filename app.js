@@ -27,7 +27,7 @@ const alienInvaders = [
     15,16,17,18,19,20,21,22,23,24,
     30,31,32,33,34,35,36,37,36,38,39
 ]
-
+console.log(alienInvaders.length)
 // draw and remove the alien invaders
 function draw(){
     for(let i=0; i< alienInvaders.length; i++){
@@ -95,15 +95,21 @@ function moveInvaders(){
             clearInterval(invadersId)
         }
     }
+    console.log(alienInvaders.length)
+    console.log(aliensRemoved.length)
+    if(aliensRemoved.length === alienInvaders.length){
+        resultDisplay.innerHTML = 'YOU WIN !!'
+            clearInterval(invadersId)
+    }
 }
-invadersId = setInterval(moveInvaders, 300)
+invadersId = setInterval(moveInvaders, 350)
 
 // shoot-laser control
 function shoot(e){
     let laserId 
     let currentLaserIndex = currentShooterIndex
     function moveLaser(){
-        if(currentLaserIndex > width){
+        if(currentLaserIndex > 0){
         squares[currentLaserIndex].classList.remove('laser')
         currentLaserIndex -= width
         squares[currentLaserIndex].classList.add('laser')
